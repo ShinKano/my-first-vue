@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Vue Routerサンプル</title>
+</head>
+<body>
+  <div id="app">
+    <!-- リンク先を `to` プロパティに指定します -->
+    <!-- デフォルトで <router-link> は `<a>` タグとしてレンダリングされます -->
+    <router-link to="/">トップページ</router-link>
+    <router-link to="/fruits">フルーツ一覧ページ</router-link>
+    <!-- 現在のURLとマッチしたルートに定義されたコンポーネントがここにレンダリングされます -->
+    <router-view></router-view>
+  </div>
+
+  <!-- Vue.jsとVue Routerを読み込む -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vue-router/2.8.1/vue-router.js"></script>
+
+  <script>
+    // この部分に必要なJavaScript実装を記述していく
+    var router = new VueRouter({
+      // 各ルートにコンポーネントをマッピングします
+      routes: [
+        {
+          path: '/',
+            component: {
+              template: `
+                <div>
+                  <h1>トップページです。</h1>
+                </div>
+              `
+            },
+        },
+        {
+          path: '/fruits',
+          component: {
+            template: `
+              <div>
+                <h1>フルーツ一覧ページです。</h1>
+                <div v-for="fruit in fruits" :key="fruit.id">
+                  <h2>{{ fruit.name }}</h2>
+                </div>
+              </div>
+            `,
+            data () {
+              return {
+                fruits: [
+                  { id: 1, name: 'りんご' },
+                  { id: 2, name: 'みかん' },
+                  { id: 3, name: 'バナナ' },
+                ]
+              }
+            }
+          }
+        }
+      ]
+    })
+
+    // Vueの初期化を行います
+    var app = new Vue({
+      router: router
+    }).$mount('#app')
+
+  </script>
+</body>
+</html>
